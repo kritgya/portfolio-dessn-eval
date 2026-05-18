@@ -23,21 +23,15 @@ export const watchlist: WatchlistItem[] = [
   { id: 'w5', symbol: 'COST', name: 'Costco Wholesale', sector: 'Consumer', currentPrice: 895.30, dayChangePct: 0.67, alertPrice: 850.00, addedOn: '2026-05-14' },
 ]
 
-// 30-day portfolio value series
 export const portfolioHistory: PortfolioSnapshot[] = Array.from({ length: 30 }, (_, i) => {
-  const day = 30 - i
   const base = 245000
   const noise = Math.sin(i * 0.5) * 8000 + Math.cos(i * 0.3) * 4000
   const trend = i * 1200
   return {
-    date: `2026-04-${String(20 + i).padStart(2, '0')}`.replace('2026-04-3', '2026-05-0').replace('2026-04-4', '2026-05-1'),
+    date: new Date(2026, 3, 20 + i).toISOString().slice(0, 10),
     value: Math.round(base + noise + trend),
   }
-}).map((s, i) => ({
-  ...s,
-  // simpler date formatting for the chart
-  date: new Date(2026, 3, 20 + i).toISOString().slice(0, 10),
-}))
+})
 
 export const sectors: Array<'All' | Position['sector']> = [
   'All',
